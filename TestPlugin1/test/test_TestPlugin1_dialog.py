@@ -8,7 +8,7 @@
 
 """
 
-__author__ = 'vlad@bital-bit.com'
+__author__ = 'vlad@vital-bit.com'
 __date__ = '2017-11-01'
 __copyright__ = 'Copyright 2017, vital-bit.com'
 
