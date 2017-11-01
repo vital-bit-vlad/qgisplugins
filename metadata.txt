@@ -9,12 +9,12 @@
 [general]
 name=TestPlugin1
 qgisMinimumVersion=2.0
-description=Test Plugin
+description=Test Plugin 1
 version=0.1
-author=vital-bit.com
+author=Vital Bit, Inc.
 email=vlad@vital-bit.com
 
-about=My first qgis plugin
+about=Test Plugin 1 about
 
 tracker=https://github.com/vital-bit-vlad/qgisplugins
 repository=https://github.com/vital-bit-vlad/qgisplugins

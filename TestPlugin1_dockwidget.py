@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- TestPlugin1Dialog
+ TestPlugin1DockWidget
                                  A QGIS plugin
- Test Plugin
+ Test Plugin 1
                              -------------------
         begin                : 2017-11-01
         git sha              : $Format:%H$
-        copyright            : (C) 2017 by vital-bit.com
+        copyright            : (C) 2017 by Vital Bit, Inc.
         email                : vlad@vital-bit.com
  ***************************************************************************/
 
@@ -24,18 +24,27 @@
 import os
 
 from PyQt4 import QtGui, uic
+from PyQt4.QtCore import pyqtSignal
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'TestPlugin1_dialog_base.ui'))
+    os.path.dirname(__file__), 'TestPlugin1_dockwidget_base.ui'))
 
 
-class TestPlugin1Dialog(QtGui.QDialog, FORM_CLASS):
+class TestPlugin1DockWidget(QtGui.QDockWidget, FORM_CLASS):
+
+    closingPlugin = pyqtSignal()
+
     def __init__(self, parent=None):
         """Constructor."""
-        super(TestPlugin1Dialog, self).__init__(parent)
+        super(TestPlugin1DockWidget, self).__init__(parent)
         # Set up the user interface from Designer.
         # After setupUI you can access any designer object by doing
         # self.<objectname>, and you can use autoconnect slots - see
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+
+    def closeEvent(self, event):
+        self.closingPlugin.emit()
+        event.accept()
+

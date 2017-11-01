@@ -3,12 +3,12 @@
 /***************************************************************************
  TestPlugin1
                                  A QGIS plugin
- Test Plugin
+ Test Plugin 1
                               -------------------
         begin                : 2017-11-01
         git sha              : $Format:%H$
-        copyright            : (C) 2017 by vital-bit.com
-        email                : vlad@bital-bit.com
+        copyright            : (C) 2017 by Vital Bit, Inc.
+        email                : vlad@vital-bit.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,12 +20,13 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
+from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt
 from PyQt4.QtGui import QAction, QIcon
 # Initialize Qt resources from file resources.py
 import resources
-# Import the code for the dialog
-from TestPlugin1_dialog import TestPlugin1Dialog
+
+# Import the code for the DockWidget
+from TestPlugin1_dockwidget import TestPlugin1DockWidget
 import os.path
 
 
@@ -42,8 +43,10 @@ class TestPlugin1:
         """
         # Save reference to the QGIS interface
         self.iface = iface
+
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
+
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -58,13 +61,18 @@ class TestPlugin1:
             if qVersion() > '4.3.3':
                 QCoreApplication.installTranslator(self.translator)
 
-
         # Declare instance attributes
         self.actions = []
         self.menu = self.tr(u'&TestPlugin1')
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'TestPlugin1')
         self.toolbar.setObjectName(u'TestPlugin1')
+
+        #print "** INITIALIZING TestPlugin1"
+
+        self.pluginIsActive = False
+        self.dockwidget = None
+
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -132,9 +140,6 @@ class TestPlugin1:
         :rtype: QAction
         """
 
-        # Create the dialog (after translation) and keep reference
-        self.dlg = TestPlugin1Dialog()
-
         icon = QIcon(icon_path)
         action = QAction(icon, text, parent)
         action.triggered.connect(callback)
@@ -158,6 +163,7 @@ class TestPlugin1:
 
         return action
 
+
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
@@ -168,9 +174,30 @@ class TestPlugin1:
             callback=self.run,
             parent=self.iface.mainWindow())
 
+    #--------------------------------------------------------------------------
+
+    def onClosePlugin(self):
+        """Cleanup necessary items here when plugin dockwidget is closed"""
+
+        #print "** CLOSING TestPlugin1"
+
+        # disconnects
+        self.dockwidget.closingPlugin.disconnect(self.onClosePlugin)
+
+        # remove this statement if dockwidget is to remain
+        # for reuse if plugin is reopened
+        # Commented next statement since it causes QGIS crashe
+        # when closing the docked window:
+        # self.dockwidget = None
+
+        self.pluginIsActive = False
+
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
+
+        #print "** UNLOAD TestPlugin1"
+
         for action in self.actions:
             self.iface.removePluginMenu(
                 self.tr(u'&TestPlugin1'),
@@ -179,15 +206,28 @@ class TestPlugin1:
         # remove the toolbar
         del self.toolbar
 
+    #--------------------------------------------------------------------------
 
     def run(self):
-        """Run method that performs all the real work"""
-        # show the dialog
-        self.dlg.show()
-        # Run the dialog event loop
-        result = self.dlg.exec_()
-        # See if OK was pressed
-        if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
+        """Run method that loads and starts the plugin"""
+
+        if not self.pluginIsActive:
+            self.pluginIsActive = True
+
+            #print "** STARTING TestPlugin1"
+
+            # dockwidget may not exist if:
+            #    first run of plugin
+            #    removed on close (see self.onClosePlugin method)
+            if self.dockwidget == None:
+                # Create the dockwidget (after translation) and keep reference
+                self.dockwidget = TestPlugin1DockWidget()
+
+            # connect to provide cleanup on closing of dockwidget
+            self.dockwidget.closingPlugin.connect(self.onClosePlugin)
+
+            # show the dockwidget
+            # TODO: fix to allow choice of dock location
+            self.iface.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
+            self.dockwidget.show()
+

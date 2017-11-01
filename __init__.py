@@ -3,10 +3,10 @@
 /***************************************************************************
  TestPlugin1
                                  A QGIS plugin
- Test Plugin
+ Test Plugin 1
                              -------------------
         begin                : 2017-11-01
-        copyright            : (C) 2017 by vital-bit.com
+        copyright            : (C) 2017 by Vital Bit, Inc.
         email                : vlad@vital-bit.com
         git sha              : $Format:%H$
  ***************************************************************************/

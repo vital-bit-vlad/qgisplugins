@@ -1,11 +1,11 @@
 #/***************************************************************************
 # TestPlugin1
 #
-# Test Plugin
+# Test Plugin 1
 #							 -------------------
 #		begin				: 2017-11-01
 #		git sha				: $Format:%H$
-#		copyright			: (C) 2017 by vital-bit.com
+#		copyright			: (C) 2017 by Vital Bit, Inc.
 #		email				: vlad@vital-bit.com
 # ***************************************************************************/
 #
@@ -38,15 +38,15 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	TestPlugin1.py TestPlugin1_dialog.py
+	TestPlugin1.py TestPlugin1_dockwidget.py
 
 PLUGINNAME = TestPlugin1
 
 PY_FILES = \
 	__init__.py \
-	TestPlugin1.py TestPlugin1_dialog.py
+	TestPlugin1.py TestPlugin1_dockwidget.py
 
-UI_FILES = TestPlugin1_dialog_base.ui
+UI_FILES = TestPlugin1_dockwidget_base.ui
 
 EXTRAS = metadata.txt icon.png
 

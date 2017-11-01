@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'TestPlugin1'
-copyright = u'2013, vital-bit.com'
+copyright = u'2013, Vital Bit, Inc.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -179,7 +179,7 @@ htmlhelp_basename = 'TemplateClassdoc'
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'TestPlugin1.tex', u'TestPlugin1 Documentation',
-   u'vital-bit.com', 'manual'),
+   u'Vital Bit, Inc.', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -212,5 +212,5 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'TemplateClass', u'TestPlugin1 Documentation',
-     [u'vital-bit.com'], 1)
+     [u'Vital Bit, Inc.'], 1)
 ]

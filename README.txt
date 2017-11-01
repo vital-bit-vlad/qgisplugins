@@ -1,7 +1,7 @@
 Plugin Builder Results
 
 Your plugin TestPlugin1 was created in:
-    C:\qgis\Plugins\TestPlugin1
+    C:\Users\vgnatiuk\.qgis2\python\plugins\TestPlugin1
 
 Your QGIS plugin directory is located at:
     C:/Users/vgnatiuk/.qgis2/python/plugins
